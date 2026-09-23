@@ -1,0 +1,55 @@
+:root {
+  color: #e8eef7;
+  background: #101827;
+  font-family: system-ui, sans-serif;
+}
+
+body {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  margin: 0;
+}
+
+.card {
+  width: min(92vw, 640px);
+  padding: 2rem;
+  border-radius: 12px;
+  background: #1a2638;
+  text-align: center;
+}
+
+button {
+  padding: 0.7rem 1.2rem;
+  border: 0;
+  border-radius: 6px;
+  color: white;
+  background: #2563eb;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+
+#room-code {
+  display: block;
+  margin: 1rem;
+  color: #7dd3fc;
+  font-size: 2rem;
+  letter-spacing: 0.2rem;
+}
+
+.video-placeholder {
+  display: grid;
+  min-height: 220px;
+  margin-top: 2rem;
+  place-items: center;
+  border: 1px dashed #64748b;
+  color: #94a3b8;
+}
+
+.error {
+  color: #fca5a5;
+}
