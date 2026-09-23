@@ -20,9 +20,9 @@ npm install
 npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in a browser and select **Create Room**.
+Open [http://localhost:3000](http://localhost:3000) in a browser. Choose **Create Room** for the Host or **Join Room** for the Connector.
 
-For the Connector browser test, open [http://localhost:3000/connector.html](http://localhost:3000/connector.html), enter the Host's room code, select **Join Room**, then select **Start Sharing**. Approve the browser's screen and microphone prompts. The Host receives both tracks. **Stop Sharing** stops the local tracks and closes the peer connection.
+The Host page is available at [http://localhost:3000/host.html](http://localhost:3000/host.html). The Connector page is available at [http://localhost:3000/connector.html](http://localhost:3000/connector.html). The Connector enters the Host's room code, selects **Join Room**, then selects **Start Sharing**. Approve the browser's screen and microphone prompts. The Host receives both tracks. **Stop Sharing** stops the local tracks and closes the peer connection.
 
 Optional configuration can be copied from `.env.example` to `.env`:
 

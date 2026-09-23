@@ -9,25 +9,11 @@
   <body>
     <main class="card">
       <h1>RemoteScreen</h1>
-      <p class="subtitle">Host</p>
-
-      <button id="create-room">Create Room</button>
-
-      <section id="room-panel" hidden>
-        <p>Share this room code with the connector:</p>
-        <strong id="room-code">------</strong>
-        <p id="status">Waiting for connector...</p>
-      </section>
-
-      <section class="video-panel">
-        <video id="remote-video" autoplay playsinline controls></video>
-        <p id="media-status">No sharing active.</p>
-      </section>
-
-      <p id="error" class="error" role="alert"></p>
+      <p class="subtitle">Choose your role</p>
+      <div class="role-choice">
+        <a class="button" href="/host.html">Create Room</a>
+        <a class="button" href="/connector.html">Join Room</a>
+      </div>
     </main>
-
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/host.js"></script>
   </body>
 </html>

@@ -19,13 +19,29 @@ body {
   text-align: center;
 }
 
-button {
+button,
+.button {
+  display: inline-block;
   padding: 0.7rem 1.2rem;
   border: 0;
   border-radius: 6px;
   color: white;
   background: #2563eb;
   cursor: pointer;
+  text-decoration: none;
+}
+
+.role-choice {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #7dd3fc;
 }
 
 button:disabled {

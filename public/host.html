@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RemoteScreen Host</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="card">
+      <h1>RemoteScreen</h1>
+      <p class="subtitle">Host</p>
+      <button id="create-room">Create Room</button>
+
+      <section id="room-panel" hidden>
+        <p>Share this room code with the Connector:</p>
+        <strong id="room-code">------</strong>
+        <p id="status">Waiting for Connector...</p>
+      </section>
+
+      <section class="video-panel">
+        <video id="remote-video" autoplay playsinline controls></video>
+        <p id="media-status">No sharing active.</p>
+      </section>
+
+      <p id="error" class="error" role="alert"></p>
+      <a class="back-link" href="/">Back</a>
+    </main>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/host.js"></script>
+  </body>
+</html>
