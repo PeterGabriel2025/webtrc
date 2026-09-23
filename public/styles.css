@@ -41,13 +41,30 @@ button:disabled {
   letter-spacing: 0.2rem;
 }
 
-.video-placeholder {
+.video-panel {
   display: grid;
   min-height: 220px;
   margin-top: 2rem;
   place-items: center;
   border: 1px dashed #64748b;
   color: #94a3b8;
+}
+
+video {
+  width: 100%;
+  max-height: 60vh;
+  background: #020617;
+}
+
+input {
+  box-sizing: border-box;
+  width: 8rem;
+  margin: 0.5rem;
+  padding: 0.7rem;
+  border: 1px solid #64748b;
+  border-radius: 6px;
+  text-align: center;
+  text-transform: uppercase;
 }
 
 .error {

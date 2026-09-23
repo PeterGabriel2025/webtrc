@@ -1,13 +1,15 @@
 # RemoteScreen MVP — Step 1
 
-This is the first small working slice of RemoteScreen:
+This is the browser WebRTC MVP slice of RemoteScreen:
 
 - A Node.js server with Socket.IO room signaling.
 - A simple Host web page.
+- A simple Connector web page.
 - One Host and one Connector per room.
 - In-memory room state only.
+- One-way browser media: Connector screen and microphone to Host.
 
-WebRTC media, Android, MediaProjection, microphone capture, TURN, authentication, and deployment are intentionally not included yet.
+Android, MediaProjection, TURN, authentication, and deployment hardening are intentionally not included yet.
 
 ## Run it
 
@@ -20,7 +22,7 @@ npm start
 
 Open [http://localhost:3000](http://localhost:3000) in a browser and select **Create Room**.
 
-For the Connector browser test, open [http://localhost:3000/connector.html](http://localhost:3000/connector.html), enter the Host's room code, and select **Join Room**. The Start Sharing and Stop Sharing buttons are placeholders until the WebRTC and Android steps.
+For the Connector browser test, open [http://localhost:3000/connector.html](http://localhost:3000/connector.html), enter the Host's room code, select **Join Room**, then select **Start Sharing**. Approve the browser's screen and microphone prompts. The Host receives both tracks. **Stop Sharing** stops the local tracks and closes the peer connection.
 
 Optional configuration can be copied from `.env.example` to `.env`:
 
@@ -51,4 +53,6 @@ socket.on("room-joined", console.log);
 ```
 
 The server also emits `connector-joined`, `peer-left`, `error-message`, and `signal`.
-`signal` is ready for the later WebRTC step but currently carries no media and does not store payloads.
+`signal` carries SDP/ICE metadata only; media travels directly over WebRTC and is not stored by the server.
+
+For public HTTPS hosting, browser screen capture requires the Render HTTPS URL (or localhost during local development).
