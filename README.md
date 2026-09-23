@@ -56,3 +56,9 @@ The server also emits `connector-joined`, `peer-left`, `error-message`, and `sig
 `signal` carries SDP/ICE metadata only; media travels directly over WebRTC and is not stored by the server.
 
 For public HTTPS hosting, browser screen capture requires the Render HTTPS URL (or localhost during local development).
+
+## Android Connector
+
+The native Android project is in [android-connector](./android-connector). Before building it, replace `YOUR-RENDER-SERVICE` in `app/src/main/res/values/config.xml` with the actual Render service hostname. Open the folder in Android Studio, sync Gradle, connect an Android 14 device, and run the app.
+
+The Android app requests only `INTERNET`, `RECORD_AUDIO`, and the Android 14 foreground-service permissions needed for visible MediaProjection capture. It does not request `CAMERA`. The app always starts capture through Android's system MediaProjection consent dialog.

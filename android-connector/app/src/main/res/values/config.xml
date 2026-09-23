@@ -1,0 +1,3 @@
+<resources>
+    <string name="signaling_url">https://YOUR-RENDER-SERVICE.onrender.com</string>
+</resources>

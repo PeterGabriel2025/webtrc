@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="RemoteScreen Connector"
+        android:textSize="24sp" />
+
+    <EditText
+        android:id="@+id/room_code"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Room code"
+        android:inputType="textCapCharacters"
+        android:maxLength="6" />
+
+    <Button
+        android:id="@+id/join_room"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Join Room" />
+
+    <Button
+        android:id="@+id/start_sharing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="Start Sharing" />
+
+    <Button
+        android:id="@+id/stop_sharing"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:enabled="false"
+        android:text="Stop Sharing" />
+
+    <TextView
+        android:id="@+id/status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Enter the Host room code." />
+</LinearLayout>

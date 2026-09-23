@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">RemoteScreen Connector</string>
+    <string name="sharing_notification">RemoteScreen sharing is active</string>
+</resources>
