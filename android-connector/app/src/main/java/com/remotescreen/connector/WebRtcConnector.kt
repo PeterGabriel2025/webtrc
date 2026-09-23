@@ -164,25 +164,24 @@ class WebRtcConnector(
                     .put("candidate", candidate.sdp)
             )
         }
-
-        private class EmptyPeerConnectionObserver : PeerConnection.Observer {
-            override fun onSignalingChange(state: PeerConnection.SignalingState) = Unit
-            override fun onIceConnectionChange(state: PeerConnection.IceConnectionState) = Unit
-            override fun onIceConnectionReceivingChange(receiving: Boolean) = Unit
-            override fun onIceGatheringChange(state: PeerConnection.IceGatheringState) = Unit
-            override fun onIceCandidate(candidate: IceCandidate) = Unit
-            override fun onIceCandidatesRemoved(candidates: Array<IceCandidate>) = Unit
-            override fun onAddStream(stream: MediaStream) = Unit
-            override fun onRemoveStream(stream: MediaStream) = Unit
-            override fun onDataChannel(channel: org.webrtc.DataChannel) = Unit
-            override fun onRenegotiationNeeded() = Unit
-            override fun onAddTrack(
-                receiver: org.webrtc.RtpReceiver,
-                mediaStreams: Array<MediaStream>
-            ) = Unit
-            override fun onTrack(transceiver: org.webrtc.RtpTransceiver) = Unit
-        }
     }
+}
+
+private class EmptyPeerConnectionObserver : PeerConnection.Observer {
+    override fun onSignalingChange(state: PeerConnection.SignalingState) = Unit
+    override fun onIceConnectionChange(state: PeerConnection.IceConnectionState) = Unit
+    override fun onIceConnectionReceivingChange(receiving: Boolean) = Unit
+    override fun onIceGatheringChange(state: PeerConnection.IceGatheringState) = Unit
+    override fun onIceCandidate(candidate: IceCandidate) = Unit
+    override fun onIceCandidatesRemoved(candidates: Array<IceCandidate>) = Unit
+    override fun onAddStream(stream: MediaStream) = Unit
+    override fun onRemoveStream(stream: MediaStream) = Unit
+    override fun onDataChannel(channel: org.webrtc.DataChannel) = Unit
+    override fun onRenegotiationNeeded() = Unit
+    override fun onAddTrack(
+        receiver: org.webrtc.RtpReceiver,
+        mediaStreams: Array<MediaStream>
+    ) = Unit
 }
 
 open class SimpleSdpObserver : org.webrtc.SdpObserver {
