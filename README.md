@@ -20,6 +20,8 @@ npm start
 
 Open [http://localhost:3000](http://localhost:3000) in a browser and select **Create Room**.
 
+For the Connector browser test, open [http://localhost:3000/connector.html](http://localhost:3000/connector.html), enter the Host's room code, and select **Join Room**. The Start Sharing and Stop Sharing buttons are placeholders until the WebRTC and Android steps.
+
 Optional configuration can be copied from `.env.example` to `.env`:
 
 - `PORT`: server port, default `3000`

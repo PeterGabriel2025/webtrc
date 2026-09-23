@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>RemoteScreen Connector</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <main class="card">
+      <h1>RemoteScreen</h1>
+      <p class="subtitle">Connector</p>
+
+      <label for="room-code-input">Room code</label>
+      <input id="room-code-input" maxlength="6" autocomplete="off" placeholder="ABC234">
+      <button id="join-room">Join Room</button>
+
+      <section id="sharing-panel" hidden>
+        <p id="status">Joined. Ready to share.</p>
+        <button id="start-sharing" disabled>Start Sharing</button>
+        <button id="stop-sharing" disabled>Stop Sharing</button>
+      </section>
+
+      <p id="error" class="error" role="alert"></p>
+    </main>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/connector.js"></script>
+  </body>
+</html>
