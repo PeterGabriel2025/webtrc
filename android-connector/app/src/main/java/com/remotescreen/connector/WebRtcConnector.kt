@@ -29,6 +29,7 @@ class WebRtcConnector(
     private val onStatus: (String) -> Unit
 ) {
     private val socket: Socket = IO.socket(signalingUrl)
+    private var iceServers: List<PeerConnection.IceServer> = emptyList()
     private val eglBase = EglBase.create()
     private val factory: PeerConnectionFactory
     private var peerConnection: PeerConnection? = null

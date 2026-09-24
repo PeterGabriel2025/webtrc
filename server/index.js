@@ -13,11 +13,102 @@ const corsOrigin = process.env.CORS_ORIGIN || "http://localhost:3000";
 const roomCodeLength = Number.parseInt(process.env.ROOM_CODE_LENGTH || "6", 10);
 const publicDirectory = path.resolve(__dirname, "../public");
 const roomStore = new RoomStore();
+let turnApiKey = null;
+
+async function createTurnCredential() {
+  const domain = process.env.METERED_DOMAIN;
+  const secretKey = process.env.METERED_SECRET_KEY;
+
+  if (!domain || !secretKey) {
+    throw new Error("METERED_DOMAIN or METERED_SECRET_KEY is missing.");
+  }
+
+  const response = await fetch(
+    `${domain}/api/v1/turn/credential?secretKey=${encodeURIComponent(secretKey)}`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        expiryInSeconds: 172800,
+        label: "remotescreen"
+      })
+    }
+  );
+
+  if (!response.ok) {
+    const body = await response.text();
+    throw new Error(
+      `Metered credential creation failed: ${response.status} ${body}`
+    );
+  }
+
+  const credential = await response.json();
+
+  turnApiKey = credential.apiKey;
+
+  console.log(
+    `Metered TURN credential created. Username: ${credential.username}`
+  );
+}
 
 function createRoomCode() {
   const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
   const bytes = crypto.randomBytes(roomCodeLength);
   return [...bytes].map((byte) => alphabet[byte % alphabet.length]).join("");
+}
+
+async function sendTurnIceServers(response) {
+  if (!turnApiKey) {
+    response.writeHead(503, {
+      "Content-Type": "application/json"
+    });
+    response.end(
+      JSON.stringify({
+        error: "TURN credentials are not ready yet."
+      })
+    );
+    return;
+  }
+  try {
+    const meterResponse = await fetch(
+      `${process.env.METERED_DOMAIN}/api/v1/turn/credentials?apiKey=${encodeURIComponent(turnApiKey)}`
+    );
+
+    if (!meterResponse.ok) {
+      const body = await meterResponse.text();
+
+      throw new Error(
+        `Metered ICE server request failed: ${meterResponse.status} ${body}`
+      );
+    }
+
+    const iceServers = await meterResponse.json();
+
+    response.writeHead(200, {
+      "Content-Type": "application/json",
+      "Cache-Control": "no-store"
+    });
+
+    response.end(
+      JSON.stringify({
+        iceServers
+      })
+    );
+  } catch (error) {
+    console.error("TURN server request failed:", error.message);
+
+    response.writeHead(500, {
+      "Content-Type": "application/json"
+    });
+
+    response.end(
+      JSON.stringify({
+        error: "Unable to obtain TURN servers."
+      })
+    );
+  }
 }
 
 function sendError(socket, message) {
@@ -32,6 +123,11 @@ function otherPeer(io, socketId, event, data) {
 
 function createHttpServer() {
   return http.createServer((request, response) => {
+    if (request.url === "/api/turn-credential") {
+      sendTurnIceServers(response);
+      return;
+    }
+
     const requestedPath = request.url === "/" ? "/index.html" : request.url;
     const filePath = path.resolve(publicDirectory, `.${requestedPath}`);
 
@@ -125,9 +221,20 @@ io.on("connection", (socket) => {
   });
 });
 
+async function initializeTurn() {
+  try {
+    await createTurnCredential();
+    console.log("Metered TURN credential initialized.");
+  } catch (error) {
+    console.error("Metered TURN initialization failed:", error.message);
+  }
+}
+
 if (require.main === module) {
-  httpServer.listen(port, () => {
-    console.log(`RemoteScreen server running at http://localhost:${port}`);
+  initializeTurn().finally(() => {
+    httpServer.listen(port, () => {
+      console.log(`RemoteScreen server running at http://localhost:${port}`);
+    });
   });
 }
 

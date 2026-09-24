@@ -1,5 +1,5 @@
 const socket = io();
-const iceServers = [{ urls: "stun:stun.l.google.com:19302" }];
+let iceServers = [];
 
 const createRoomButton = document.querySelector("#create-room");
 const roomPanel = document.querySelector("#room-panel");
@@ -11,6 +11,33 @@ const mediaStatus = document.querySelector("#media-status");
 
 let peerConnection;
 let pendingIceCandidates = [];
+
+async function loadIceServers() {
+  const response = await fetch(
+    "/api/turn-credential",
+    {
+      cache: "no-store"
+    }
+  );
+
+  if (!response.ok) {
+    const body = await response.text();
+
+    throw new Error(
+      `TURN configuration failed: ${response.status} ${body}`
+    );
+  }
+
+  const data = await response.json();
+
+  if (!Array.isArray(data.iceServers)) {
+    throw new Error(
+      "Invalid TURN configuration."
+    );
+  }
+
+  iceServers = data.iceServers;
+}
 
 createRoomButton.addEventListener("click", () => {
   errorMessage.textContent = "";
@@ -30,6 +57,8 @@ socket.on("connector-joined", () => {
 socket.on("signal", async ({ type, data }) => {
   try {
     if (type === "offer") {
+      await loadIceServers();
+
       peerConnection = createPeerConnection();
 
       await peerConnection.setRemoteDescription(data);
